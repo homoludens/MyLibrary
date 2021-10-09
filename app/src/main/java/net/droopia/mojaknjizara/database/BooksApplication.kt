@@ -16,7 +16,7 @@
 */
 
 
-package com.timenotclocks.bookcase.database
+package net.droopia.mojaknjizara.database
 
 import android.app.Application
 import kotlinx.coroutines.CoroutineScope

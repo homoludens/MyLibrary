@@ -12,7 +12,11 @@ import android.view.Menu
 import android.view.MenuItem
 import net.droopia.mojaknjizara.databinding.ActivityMainBinding
 
+
+
 class MainActivity : AppCompatActivity() {
+
+
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding

@@ -1,8 +1,8 @@
-package com.timenotclocks.bookcase.api
+package net.droopia.mojaknjizara.api
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
-import com.timenotclocks.bookcase.database.Book
-import com.timenotclocks.bookcase.database.csvDateFormatter
+import net.droopia.mojaknjizara.database.Book
+import net.droopia.mojaknjizara.database.csvDateFormatter
 import java.io.InputStream
 import java.time.LocalDate
 import java.util.*

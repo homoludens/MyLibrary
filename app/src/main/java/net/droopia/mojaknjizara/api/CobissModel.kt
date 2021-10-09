@@ -1,4 +1,4 @@
-package com.timenotclocks.bookcase.api
+package net.droopia.mojaknjizara.api
 
 import android.app.Application
 import android.util.Log
@@ -11,10 +11,13 @@ import com.android.volley.toolbox.StringRequest
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
-import com.timenotclocks.bookcase.LOG_EDIT
-import com.timenotclocks.bookcase.LOG_SEARCH
-import com.timenotclocks.bookcase.TAG_NEW
-import com.timenotclocks.bookcase.database.Book
+
+import net.droopia.mojaknjizara.LOG_EDIT
+import net.droopia.mojaknjizara.LOG_SEARCH
+import net.droopia.mojaknjizara.TAG_NEW
+
+import net.droopia.mojaknjizara.database.Book
+
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jsoup.Connection

@@ -16,7 +16,7 @@
 */
 
 
-package com.timenotclocks.bookcase.database
+package net.droopia.mojaknjizara.database
 
 import android.content.Context
 import androidx.room.Database

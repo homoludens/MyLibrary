@@ -1,4 +1,4 @@
-package com.timenotclocks.bookcase.api
+package net.droopia.mojaknjizara.api
 
 import android.content.Context
 import android.graphics.Bitmap

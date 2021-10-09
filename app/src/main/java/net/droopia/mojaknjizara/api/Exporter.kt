@@ -1,10 +1,10 @@
-package com.timenotclocks.bookcase.api
+package net.droopia.mojaknjizara.api
 
 import android.util.Log
 import com.github.doyaaaaaken.kotlincsv.dsl.context.WriteQuoteMode
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
-import com.timenotclocks.bookcase.database.Book
-import com.timenotclocks.bookcase.database.csvDateFormatter
+import net.droopia.mojaknjizara.database.Book
+import net.droopia.mojaknjizara.database.csvDateFormatter
 import java.io.OutputStream
 import java.time.LocalDate
 
