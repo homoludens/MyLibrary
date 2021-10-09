@@ -438,8 +438,8 @@ internal class OpenLibraryViewModel(application: Application) : AndroidViewModel
 
         val book_bib = link.attr("data-cobiss-id")
         val title = link.attr("data-title")
-        val author = link.select("span.author").first().text()
-        val year = link.select("span.publishDate-data").first().text()
+        val author = link.select("span.author").first()?.text()
+        val year = link.select("span.publishDate-data").first()?.text()
         val selfLink = "https://plus.sr.cobiss.net/opac7/bib/risCit/$book_bib"
 
         val book: Book = Book(

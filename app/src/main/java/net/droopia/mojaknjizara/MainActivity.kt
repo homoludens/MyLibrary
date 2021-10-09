@@ -12,7 +12,9 @@ import android.view.Menu
 import android.view.MenuItem
 import net.droopia.mojaknjizara.databinding.ActivityMainBinding
 
-
+const val LOG_EDIT = "BookEdit"
+const val LOG_SEARCH = "BookSearch"
+const val TAG_NEW = "BookNew"
 
 class MainActivity : AppCompatActivity() {
 
