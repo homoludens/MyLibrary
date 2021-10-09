@@ -61,7 +61,7 @@ data class BookDetails(
  * @property bookDetails book details to show in list
  * @constructor Creates an empty group.
  */
-internal class OpenLibraryViewModel(application: Application) : AndroidViewModel(application) {
+internal class CobissModel(application: Application) : AndroidViewModel(application) {
 
 //    private val base = "openlibrary.org"
     private val base = "www.googleapis.com"

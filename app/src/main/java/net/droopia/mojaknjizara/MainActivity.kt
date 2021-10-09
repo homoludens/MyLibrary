@@ -15,6 +15,9 @@ import net.droopia.mojaknjizara.databinding.ActivityMainBinding
 const val LOG_EDIT = "BookEdit"
 const val LOG_SEARCH = "BookSearch"
 const val TAG_NEW = "BookNew"
+const val EXTRA_BOOK = "Bookintent"
+const val LOG_TAG = "BookSearch"
+const val EXTRA_ID= ""
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,6 +55,19 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
+
+            R.id.search_scan_item -> {
+                val intent = Intent(applicationContext, LibrarySearchActivity::class.java).apply {
+                    putExtra(EXTRA_SCAN, true)
+                }
+                startActivity(intent)
+                return true
+            }
+            R.id.search_menu_item -> {
+                val intent = Intent(applicationContext, LibrarySearchActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             R.id.action_settings ->  {
                 val intent = Intent(applicationContext, SettingsActivity::class.java)
                 startActivity(intent)
