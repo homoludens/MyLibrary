@@ -1,4 +1,4 @@
-package com.timenotclocks.bookcase
+package net.droopia.mojaknjizara
 
 import android.content.Intent
 import android.net.Uri
@@ -14,17 +14,17 @@ import androidx.cardview.widget.CardView
 import com.beust.klaxon.Klaxon
 import com.google.android.material.button.MaterialButton
 import com.squareup.picasso.Picasso
-import com.timenotclocks.bookcase.api.OpenLibraryViewModel
-import com.timenotclocks.bookcase.database.*
-import com.timenotclocks.bookcase.ui.main.EXTRA_BOOK
+import net.droopia.mojaknjizara.api.CobissModel
+import net.droopia.mojaknjizara.database.*
+import net.droopia.mojaknjizara.ui.main.EXTRA_BOOK
 import java.time.LocalDate
 
-const val TAG_NEW = "BookNew"
+//const val TAG_NEW = "BookNew"
 const val EXTRA_NEW = "new_book"
-const val EXTRA_ID = "book_id"
+//const val EXTRA_ID = "book_id"
 
 class NewBookActivity : AppCompatActivity() {
-    private val openLibraryViewModel: OpenLibraryViewModel by viewModels()
+    private val openLibraryViewModel: CobissModel by viewModels()
     private val bookViewModel: BookViewModel by viewModels {
         BookViewModelFactory((application as BooksApplication).repository)
     }
@@ -153,11 +153,11 @@ class NewBookActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.new_book_series).text = current.series?.let {  "Series: $it" }
         findViewById<TextView>(R.id.new_book_language).text = current.language?.let {  "Language: $it" }
 
-        val shelfDropdown = findViewById<MaterialButton>(R.id.new_book_shelf_dropdown)
-        shelfDropdown.text = current.shelf
-        shelfDropdown.setOnClickListener { view ->
-            view?.let { v -> showMenu(current, v, R.menu.shelf_menu) }
-        }
+//        val shelfDropdown = findViewById<MaterialButton>(R.id.new_book_shelf_dropdown)
+//        shelfDropdown.text = current.shelf
+//        shelfDropdown.setOnClickListener { view ->
+//            view?.let { v -> showMenu(current, v, R.menu.shelf_menu) }
+//        }
     }
 
     private fun displayDuplicate(alike: Book) {
@@ -191,22 +191,22 @@ class NewBookActivity : AppCompatActivity() {
     private fun showMenu(b: Book, v: View, @MenuRes menuRes: Int) {
         val popup = PopupMenu(applicationContext, v)
         popup.menuInflater.inflate(menuRes, popup.menu)
-        val btn = findViewById<Button>(R.id.new_book_shelf_dropdown)
-        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            when (menuItem.itemId) {
-                R.id.shelf_to_read -> {
-                    b.shelve(ShelfType.ToReadShelf, btn, bookViewModel)
-                }
-                R.id.shelf_currently_reading -> {
-                    b.shelve(ShelfType.CurrentShelf, btn, bookViewModel)
-                }
-                R.id.shelf_read -> {
-                    b.shelve(ShelfType.ReadShelf, btn, bookViewModel)
-                }
-            }
-            true
-        }
-        popup.show()
+//        val btn = findViewById<Button>(R.id.new_book_shelf_dropdown)
+//        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+//            when (menuItem.itemId) {
+//                R.id.shelf_to_read -> {
+//                    b.shelve(ShelfType.ToReadShelf, btn, bookViewModel)
+//                }
+//                R.id.shelf_currently_reading -> {
+//                    b.shelve(ShelfType.CurrentShelf, btn, bookViewModel)
+//                }
+//                R.id.shelf_read -> {
+//                    b.shelve(ShelfType.ReadShelf, btn, bookViewModel)
+//                }
+//            }
+//            true
+//        }
+//        popup.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

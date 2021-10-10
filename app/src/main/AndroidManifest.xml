@@ -23,6 +23,18 @@
             android:name=".LibrarySearchActivity"
             android:label="@string/title_search_book_activity" />
         <activity
+            android:name=".BookViewActivity"
+            android:label="@string/title_search_book_activity" />
+        <activity
+            android:name=".BookEditActivity"
+            android:label="@string/title_search_book_activity" />
+        <activity
+            android:name=".BookPhotoActivity"
+            android:label="@string/title_search_book_activity" />
+        <activity
+            android:name=".NewBookActivity"
+            android:label="@string/title_search_book_activity" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

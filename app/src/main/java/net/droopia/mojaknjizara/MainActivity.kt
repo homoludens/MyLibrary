@@ -18,6 +18,8 @@ const val TAG_NEW = "BookNew"
 const val EXTRA_BOOK = "Bookintent"
 const val LOG_TAG = "BookSearch"
 const val EXTRA_ID= ""
+const val LOG_BOOK_VIEW= "BookView"
+
 
 class MainActivity : AppCompatActivity() {
 

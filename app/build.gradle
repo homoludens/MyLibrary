@@ -102,4 +102,9 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
 
 
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:17.0.0'
+
+
 }

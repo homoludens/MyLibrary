@@ -1,4 +1,4 @@
-package com.timenotclocks.bookcase
+package net.droopia.mojaknjizara
 
 
 import android.Manifest
@@ -48,12 +48,12 @@ import com.labters.documentscanner.ImageCropActivity
 import com.labters.documentscanner.helpers.ScannerConstants
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.timenotclocks.bookcase.api.OpenLibraryViewModel
-import com.timenotclocks.bookcase.database.Book
-import com.timenotclocks.bookcase.database.BookViewModel
-import com.timenotclocks.bookcase.database.BookViewModelFactory
-import com.timenotclocks.bookcase.database.BooksApplication
-import com.timenotclocks.bookcase.ui.main.EXTRA_BOOK
+import net.droopia.mojaknjizara.api.CobissModel
+import net.droopia.mojaknjizara.database.Book
+import net.droopia.mojaknjizara.database.BookViewModel
+import net.droopia.mojaknjizara.database.BookViewModelFactory
+import net.droopia.mojaknjizara.database.BooksApplication
+import net.droopia.mojaknjizara.ui.main.EXTRA_BOOK
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import java.io.File
@@ -70,7 +70,7 @@ class BookPhotoActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.book_edit_menu, menu)
+        inflater.inflate(R.menu.menu_main, menu)
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -118,7 +118,7 @@ class BookPhotoActivity : AppCompatActivity() {
         capturedImage.createNewFile()
 
         mUri = if(Build.VERSION.SDK_INT >= 24){
-            FileProvider.getUriForFile(this, "com.timenotclocks.bookcase.fileprovider", capturedImage)
+            FileProvider.getUriForFile(this, "net.droopia.net.fileprovider", capturedImage)
         } else {
             Uri.fromFile(capturedImage)
         }
@@ -413,7 +413,7 @@ class BookPhotoActivity : AppCompatActivity() {
             mmUri = if (Build.VERSION.SDK_INT >= 24) {
                         FileProvider.getUriForFile(
                             this,
-                            "com.timenotclocks.bookcase.fileprovider",
+                            "net.droopia.net.fileprovider",
                             imgFile
                         )
                     } else {

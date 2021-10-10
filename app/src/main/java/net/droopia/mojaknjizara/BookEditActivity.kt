@@ -1,4 +1,4 @@
-package com.timenotclocks.bookcase
+package net.droopia.mojaknjizara
 
 
 import android.annotation.SuppressLint
@@ -24,8 +24,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.timenotclocks.bookcase.api.OpenLibraryViewModel
-import com.timenotclocks.bookcase.database.*
+import net.droopia.mojaknjizara.api.CobissModel
+import net.droopia.mojaknjizara.database.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -40,19 +40,19 @@ import java.time.LocalDate
 
 const val RESULT_DELETED = 140
 const val EXTRA_SAVED_BOOK = "book_changes_saved"
-const val LOG_EDIT = "BookEdit"
+//const val LOG_EDIT = "BookEdit"
 
 class BookEditActivity : AppCompatActivity() {
 
     private var book: Book? = null
-    private val openLibraryViewModel: OpenLibraryViewModel by viewModels()
+    private val openLibraryViewModel: CobissModel by viewModels()
     private val bookViewModel: BookViewModel by viewModels {
         BookViewModelFactory((application as BooksApplication).repository)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.book_edit_menu, menu)
+        inflater.inflate(R.menu.menu_main, menu)
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -271,37 +271,37 @@ class BookEditActivity : AppCompatActivity() {
         current.notes?.let { notesEdit?.setText(it) }
         notesEdit?.doAfterTextChanged { editable -> current.notes = editable?.toString() }
 
-        val shelfDropdown = findViewById<Button>(R.id.book_edit_shelf_dropdown)
-        shelfDropdown.text = current.shelfString()
-        shelfDropdown.setOnClickListener { view ->
-            view?.let { v ->
-                val popup = PopupMenu(applicationContext, v)
-                popup.menuInflater.inflate(R.menu.shelf_menu, popup.menu)
-                popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-                    when (menuItem.itemId) {
-                        R.id.shelf_to_read -> {
-                            current.shelve(ShelfType.ToReadShelf, shelfDropdown, bookViewModel)
-                        }
-                        R.id.shelf_currently_reading -> {
-                            current.shelve(ShelfType.CurrentShelf, shelfDropdown, bookViewModel)
-                        }
-                        R.id.shelf_read -> {
-                            current.shelve(ShelfType.ReadShelf, shelfDropdown, bookViewModel)
-                        }
-                        else -> {
-                            true
-                        }
-                    }
-                }
-                popup.show()
-            }
-        }
-        val ratingBar = findViewById<RatingBar>(R.id.book_edit_rating_bar)
-        current.rating?.let { ratingBar.setRating(it.toFloat()) }
-        // TODO Doesn't work
-        ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { bar, rating, fromUser ->
-            current.rating = rating.toInt()
-        }
+//        val shelfDropdown = findViewById<Button>(R.id.book_edit_shelf_dropdown)
+//        shelfDropdown.text = current.shelfString()
+//        shelfDropdown.setOnClickListener { view ->
+//            view?.let { v ->
+//                val popup = PopupMenu(applicationContext, v)
+//                popup.menuInflater.inflate(R.menu.shelf_menu, popup.menu)
+//                popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+//                    when (menuItem.itemId) {
+//                        R.id.shelf_to_read -> {
+//                            current.shelve(ShelfType.ToReadShelf, shelfDropdown, bookViewModel)
+//                        }
+//                        R.id.shelf_currently_reading -> {
+//                            current.shelve(ShelfType.CurrentShelf, shelfDropdown, bookViewModel)
+//                        }
+//                        R.id.shelf_read -> {
+//                            current.shelve(ShelfType.ReadShelf, shelfDropdown, bookViewModel)
+//                        }
+//                        else -> {
+//                            true
+//                        }
+//                    }
+//                }
+//                popup.show()
+//            }
+//        }
+//        val ratingBar = findViewById<RatingBar>(R.id.book_edit_rating_bar)
+//        current.rating?.let { ratingBar.setRating(it.toFloat()) }
+//        // TODO Doesn't work
+//        ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { bar, rating, fromUser ->
+//            current.rating = rating.toInt()
+//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -346,9 +346,9 @@ class BookEditActivity : AppCompatActivity() {
                 setResult(RESULT_OK, intent)
                 finish();
             }
-            R.id.menu_meta -> {
-                book?.isbn13?.let { openLibraryViewModel.getBookDetails(it) }
-            }
+//            R.id.menu_meta -> {
+//                book?.isbn13?.let { openLibraryViewModel.getBookDetails(it) }
+//            }
         }
 
         return super.onOptionsItemSelected(item)

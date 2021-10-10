@@ -1,4 +1,4 @@
-package com.timenotclocks.bookcase
+package net.droopia.mojaknjizara
 
 import android.content.Context
 import android.content.DialogInterface
@@ -22,11 +22,11 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.squareup.picasso.Picasso
-import com.timenotclocks.bookcase.database.*
+import net.droopia.mojaknjizara.database.*
 import java.time.LocalDate
 
 
-const val LOG_BOOK_VIEW = "BookView"
+//const val LOG_BOOK_VIEW = "BookView"
 
 class BookViewActivity : AppCompatActivity() {
 
@@ -38,7 +38,7 @@ class BookViewActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.book_view_menu, menu)
+        inflater.inflate(R.menu.menu_main, menu)
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -129,11 +129,11 @@ class BookViewActivity : AppCompatActivity() {
             desc.text = current.description
         }
 
-        val shelfDropdown = findViewById<Button>(R.id.book_view_shelf_dropdown)
-        shelfDropdown.text = current.shelfString()
-        shelfDropdown.setOnClickListener { view ->
-            view?.let { v -> showMenu(v, R.menu.shelf_menu) }
-        }
+//        val shelfDropdown = findViewById<Button>(R.id.book_view_shelf_dropdown)
+//        shelfDropdown.text = current.shelfString()
+//        shelfDropdown.setOnClickListener { view ->
+//            view?.let { v -> showMenu(v, R.menu.shelf_menu) }
+//        }
 
         val ratingBar = findViewById<RatingBar>(R.id.book_view_rating_bar)
         current.rating?.let { ratingBar.rating = it.toFloat() }
@@ -154,12 +154,12 @@ class BookViewActivity : AppCompatActivity() {
             android.R.id.home -> {
                 finish()
             }
-            R.id.menu_with_badreads -> {
-                val intent = Intent(applicationContext, OpenLibrarySearchActivity::class.java).apply {
-                    putExtra(EXTRA_SEARCH, book?.titleString())
-                }
-                startActivity(intent)
-            }
+//            R.id.menu_with_badreads -> {
+//                val intent = Intent(applicationContext, LibrarySearchActivity::class.java).apply {
+//                    putExtra(EXTRA_SEARCH, book?.titleString())
+//                }
+//                startActivity(intent)
+//            }
             R.id.menu_edit, R.id.menu_edit_text -> {
                 Log.i(LOG_BOOK_VIEW, "Editing this book")
                 book?.let { it ->
@@ -169,15 +169,15 @@ class BookViewActivity : AppCompatActivity() {
                     startActivityForResult(intent, 100)
                 }
             }
-            R.id.menu_open_library, R.id.menu_open_library_text -> {
-                book?.let{ b ->
-                    val term = b.isbn13 ?: b.titleString()
-                    val url = "https://openlibrary.org/search?q=$term"
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = Uri.parse(url)
-                    startActivity(i)
-                }
-            }
+//            R.id.menu_open_library, R.id.menu_open_library_text -> {
+//                book?.let{ b ->
+//                    val term = b.isbn13 ?: b.titleString()
+//                    val url = "https://openlibrary.org/search?q=$term"
+//                    val i = Intent(Intent.ACTION_VIEW)
+//                    i.data = Uri.parse(url)
+//                    startActivity(i)
+//                }
+//            }
             R.id.menu_delete -> {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                 builder.apply {
@@ -198,19 +198,19 @@ class BookViewActivity : AppCompatActivity() {
                 builder.create()
                 builder.show()
             }
-            R.id.menu_greenlight -> {
-                book?.let { b ->
-                    val url: String = b.isbn13?.let {
-                        "https://www.greenlightbookstore.com/book/$it"
-
-                    } ?: run {
-                        "https://www.greenlightbookstore.com/search/site/${b.titleString().replace(" ", "+").replace(":", "")}"
-                    }
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = Uri.parse(url)
-                    startActivity(i)
-                }
-            }
+//            R.id.menu_greenlight -> {
+//                book?.let { b ->
+//                    val url: String = b.isbn13?.let {
+//                        "https://www.greenlightbookstore.com/book/$it"
+//
+//                    } ?: run {
+//                        "https://www.greenlightbookstore.com/search/site/${b.titleString().replace(" ", "+").replace(":", "")}"
+//                    }
+//                    val i = Intent(Intent.ACTION_VIEW)
+//                    i.data = Uri.parse(url)
+//                    startActivity(i)
+//                }
+//            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -250,22 +250,22 @@ class BookViewActivity : AppCompatActivity() {
         val popup = PopupMenu(applicationContext, v)
         popup.menuInflater.inflate(menuRes, popup.menu)
 
-        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            val btn = findViewById<Button>(R.id.book_view_shelf_dropdown)
-            when (menuItem.itemId) {
-                R.id.shelf_to_read -> {
-                    book?.let { it.shelve(ShelfType.ToReadShelf, btn, bookViewModel) }
-                }
-                R.id.shelf_currently_reading -> {
-                    book?.let { it.shelve(ShelfType.CurrentShelf, btn, bookViewModel) }
-                }
-                R.id.shelf_read -> {
-                    book?.let { it.shelve(ShelfType.ReadShelf, btn, bookViewModel) }
-                }
-            }
-            true
-        }
-        popup.show()
+//        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+//            val btn = findViewById<Button>(R.id.book_view_shelf_dropdown)
+//            when (menuItem.itemId) {
+//                R.id.shelf_to_read -> {
+//                    book?.let { it.shelve(ShelfType.ToReadShelf, btn, bookViewModel) }
+//                }
+//                R.id.shelf_currently_reading -> {
+//                    book?.let { it.shelve(ShelfType.CurrentShelf, btn, bookViewModel) }
+//                }
+//                R.id.shelf_read -> {
+//                    book?.let { it.shelve(ShelfType.ReadShelf, btn, bookViewModel) }
+//                }
+//            }
+//            true
+//        }
+//        popup.show()
     }
 }
 

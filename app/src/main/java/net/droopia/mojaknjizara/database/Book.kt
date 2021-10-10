@@ -85,11 +85,11 @@ data class Book(
 //            return thumbnail
 //        }
         if (cover.isNullOrBlank()) run {
-            cover = "content://com.timenotclocks.bookcase.fileprovider/book_cover_images/Android/data/com.timenotclocks.bookcase/files/Pictures/BookCoverPhoto-20210913_220545.jpg"
+            cover = "content://net.droopia.net.fileprovider/book_cover_images/Android/data/net.droopia.net/files/Pictures/BookCoverPhoto-20210913_220545.jpg"
 //            cover = ""
         }
         return cover
-//        return "content://com.timenotclocks.bookcase.fileprovider/my_images/Android/data/com.timenotclocks.bookcase/cache/My_Captured_Photo.jpg"
+//        return "content://net.droopia.net.fileprovider/my_images/Android/data/net.droopia.net/cache/My_Captured_Photo.jpg"
 //        return "https://covers.openlibrary.org/b/isbn/$isbn-$size.jpg?default=false"
     }
 
@@ -182,7 +182,7 @@ fun fakeBook(
         bookId = id,
         title = title,
         subtitle = "How Subs Change Books",
-        cover = "content://com.timenotclocks.bookcase.fileprovider/my_images/Android/data/com.timenotclocks.bookcase/cache/My_Captured_Photo.jpg",
+        cover = "content://net.droopia.net.fileprovider/my_images/Android/data/net.droopia.net/cache/My_Captured_Photo.jpg",
         isbn10 = "0123456789",
         isbn13 = isbn13,
         selfLink = "https://www.googleapis.com/books/v1/volumes/IAmWzgEACAAJ",
