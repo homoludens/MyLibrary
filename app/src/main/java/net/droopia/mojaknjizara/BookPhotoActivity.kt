@@ -44,10 +44,11 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
-import com.labters.documentscanner.ImageCropActivity
-import com.labters.documentscanner.helpers.ScannerConstants
+//import com.labters.documentscanner.ImageCropActivity
+//import com.labters.documentscanner.helpers.ScannerConstants
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.zynksoftware.documentscanner.ui.DocumentScanner
 import net.droopia.mojaknjizara.api.CobissModel
 import net.droopia.mojaknjizara.database.Book
 import net.droopia.mojaknjizara.database.BookViewModel
@@ -118,7 +119,7 @@ class BookPhotoActivity : AppCompatActivity() {
         capturedImage.createNewFile()
 
         mUri = if(Build.VERSION.SDK_INT >= 24){
-            FileProvider.getUriForFile(this, "net.droopia.net.fileprovider", capturedImage)
+            FileProvider.getUriForFile(this, "net.droopia.mojaknjizara.fileprovider", capturedImage)
         } else {
             Uri.fromFile(capturedImage)
         }
@@ -145,20 +146,26 @@ class BookPhotoActivity : AppCompatActivity() {
 
     private fun cropPhoto(bookId: Long) {
 
-        Thread(Runnable {
 
-            val book = bookViewModel.getBookOnce(bookId)
-            if (book.cover?.isNotEmpty() == true) {
-                val picasso_bitmap = Picasso.get().load(book.cover).get()
-                ScannerConstants.selectedImageBitmap = picasso_bitmap
-                startActivityForResult(
-                    Intent(this, ImageCropActivity::class.java),
-                    OPERATION_CROP_PHOTO
-                )
-            } else {
-                Log.i("cropPhoto", "book has no cover")
-            }
-        }).start()
+        AppScanActivity.start(this)
+
+//        Thread(Runnable {
+//
+//            val book = bookViewModel.getBookOnce(bookId)
+//            if (book.cover?.isNotEmpty() == true) {
+//                val picasso_bitmap = Picasso.get().load(book.cover).get()
+//
+//
+//
+////                ScannerConstants.selectedImageBitmap = picasso_bitmap
+//                startActivityForResult(
+//                    Intent(this, DocumentScanner::class.java),
+//                    OPERATION_CROP_PHOTO
+//                )
+//            } else {
+//                Log.i("cropPhoto", "book has no cover")
+//            }
+//        }).start()
     }
 
     private fun ocrPhoto(bookId: Long) {
@@ -233,12 +240,13 @@ class BookPhotoActivity : AppCompatActivity() {
             OPERATION_CROP_PHOTO ->
                 if (resultCode == Activity.RESULT_OK) {
 
-                    if (ScannerConstants.selectedImageBitmap != null) {
-                        mImageView?.setImageBitmap(ScannerConstants.selectedImageBitmap)
-                        mUri = saveImage(ScannerConstants.selectedImageBitmap!!)
-                    } else {
-                        Toast.makeText(this, "Not OK", Toast.LENGTH_LONG).show()
-                    }
+                    Toast.makeText(this, "Crop OK", Toast.LENGTH_LONG).show()
+//                    if (ScannerConstants.selectedImageBitmap != null) {
+//                        mImageView?.setImageBitmap(ScannerConstants.selectedImageBitmap)
+//                        mUri = saveImage(ScannerConstants.selectedImageBitmap!!)
+//                    } else {
+//                        Toast.makeText(this, "Not OK", Toast.LENGTH_LONG).show()
+//                    }
                     book?.cover = mUri.toString()
                     book?.let { bookViewModel.update(it) }
                 }
@@ -246,11 +254,12 @@ class BookPhotoActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_photo)
-        val RidToolbar = R.id.toolbar
-        Log.i(TAG_NEW, "FFF BookPhotoActiviti mUri: $RidToolbar")
-        setSupportActionBar(findViewById(R.id.toolbar))
+//        val RidToolbar = R.id.toolbar
+//        Log.i(TAG_NEW, "FFF BookPhotoActiviti mUri: $RidToolbar")
+//        setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -298,6 +307,14 @@ class BookPhotoActivity : AppCompatActivity() {
         btnCrop.setOnClickListener{cropPhoto(bookId!!)}
 
         btnOcr.setOnClickListener{ocrPhoto(bookId!!)}
+
+
+        val configuration = DocumentScanner.Configuration()
+        configuration.imageQuality = 100
+        configuration.imageSize = 1000000 // 1 MB
+        configuration.imageType = Bitmap.CompressFormat.JPEG
+        DocumentScanner.init(this, configuration) // or simply DocumentScanner.init(this)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -413,7 +430,7 @@ class BookPhotoActivity : AppCompatActivity() {
             mmUri = if (Build.VERSION.SDK_INT >= 24) {
                         FileProvider.getUriForFile(
                             this,
-                            "net.droopia.net.fileprovider",
+                            "net.droopia.mojaknjizara.fileprovider",
                             imgFile
                         )
                     } else {

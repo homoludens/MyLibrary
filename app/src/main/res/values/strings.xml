@@ -29,5 +29,16 @@
     <string name="title_search_book_activity">Search cobiss</string>
     <string name="book_edit">Edit book</string>
 
+    <string name="our_image">Our Image</string>
+    <string name="capture">Capture</string>
+    <string name="choose">Choose</string>
+    <string name="crop">Crop</string>
+    <string name="ocr">OCR</string>
+
+    <string name="error_label">Error</string>
+    <string name="ok_label">Ok</string>
+    <string name="photo_saved">Photo saved</string>
+
+
 
 </resources>

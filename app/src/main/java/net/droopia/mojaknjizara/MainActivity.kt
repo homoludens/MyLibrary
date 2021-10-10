@@ -11,6 +11,15 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import net.droopia.mojaknjizara.databinding.ActivityMainBinding
+import com.zynksoftware.documentscanner.ui.DocumentScanner
+import android.graphics.Bitmap
+import androidx.activity.viewModels
+import net.droopia.mojaknjizara.database.BookViewModel
+import net.droopia.mojaknjizara.api.Exporter
+import net.droopia.mojaknjizara.api.Import
+import net.droopia.mojaknjizara.database.BookViewModelFactory
+import net.droopia.mojaknjizara.database.BooksApplication
+import net.droopia.mojaknjizara.database.emptyBook
 
 const val LOG_EDIT = "BookEdit"
 const val LOG_SEARCH = "BookSearch"
@@ -19,10 +28,13 @@ const val EXTRA_BOOK = "Bookintent"
 const val LOG_TAG = "BookSearch"
 const val EXTRA_ID= ""
 const val LOG_BOOK_VIEW= "BookView"
-
+const val TAG = "scan activitiy"
 
 class MainActivity : AppCompatActivity() {
 
+    private val bookViewModel: BookViewModel by viewModels {
+        BookViewModelFactory((application as BooksApplication).repository)
+    }
 
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,6 +56,14 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+
+//        val configuration = DocumentScanner.Configuration()
+//        configuration.imageQuality = 100
+//        configuration.imageSize = 1000000 // 1 MB
+//        configuration.imageType = Bitmap.CompressFormat.JPEG
+//        DocumentScanner.init(this, configuration) // or simply DocumentScanner.init(this)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

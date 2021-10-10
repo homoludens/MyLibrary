@@ -47,7 +47,7 @@ class BookViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_view)
-        setSupportActionBar(findViewById(R.id.toolbar))
+//        setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         intent.extras?.getLong(EXTRA_ID)?.let { id ->
             bookViewModel.getBook(id).observe(this, { observable ->

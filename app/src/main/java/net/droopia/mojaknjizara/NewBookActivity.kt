@@ -14,10 +14,19 @@ import androidx.cardview.widget.CardView
 import com.beust.klaxon.Klaxon
 import com.google.android.material.button.MaterialButton
 import com.squareup.picasso.Picasso
-import net.droopia.mojaknjizara.api.CobissModel
+//import net.droopia.mojaknjizara.api.CobissModel
 import net.droopia.mojaknjizara.database.*
 import net.droopia.mojaknjizara.ui.main.EXTRA_BOOK
 import java.time.LocalDate
+
+import net.droopia.mojaknjizara.api.MAX_SEARCH_RESULTS
+import net.droopia.mojaknjizara.api.CobissModel
+import net.droopia.mojaknjizara.database.BookViewModel
+import net.droopia.mojaknjizara.database.BookViewModelFactory
+import net.droopia.mojaknjizara.database.BooksApplication
+import net.droopia.mojaknjizara.database.emptyBook
+import net.droopia.mojaknjizara.ui.main.LibrarySearchAdapter
+
 
 //const val TAG_NEW = "BookNew"
 const val EXTRA_NEW = "new_book"
@@ -32,8 +41,8 @@ class NewBookActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_book)
-        setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        setSupportActionBar(findViewById(R.id.toolbar))
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val progressBar = findViewById<ProgressBar>(R.id.duplicate_progress_bar)
 
@@ -162,7 +171,13 @@ class NewBookActivity : AppCompatActivity() {
 
     private fun displayDuplicate(alike: Book) {
         alike.cover("M")?.let {
-            Picasso.get().load(it).into(findViewById<ImageView>(R.id.duplicate_book_cover_image))
+//            Picasso.get().load(it).into(findViewById<ImageView>(R.id.duplicate_book_cover_image))
+
+            Picasso.get()
+                .load(it)
+                .placeholder(R.drawable.ic_book_cover_placeholder)
+                .error(R.drawable.ic_book_cover_placeholder)
+                .into(findViewById<ImageView>(R.id.duplicate_book_cover_image));
         }
         findViewById<TextView>(R.id.duplicate_book_title).text = alike.titleString()
         findViewById<TextView>(R.id.duplicate_book_author).text = alike.authorString()

@@ -10,7 +10,7 @@ import java.util.*
 
 const val LOG_GOOD_READ = "BookGoodRead"
 
-class GoodReadImport {
+class Import {
 
     fun serialize(inputStream: InputStream): List<Book> {
         val rows = csvReader().readAllWithHeader(inputStream)

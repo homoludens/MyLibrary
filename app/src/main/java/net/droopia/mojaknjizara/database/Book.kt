@@ -85,7 +85,7 @@ data class Book(
 //            return thumbnail
 //        }
         if (cover.isNullOrBlank()) run {
-            cover = "content://net.droopia.net.fileprovider/book_cover_images/Android/data/net.droopia.net/files/Pictures/BookCoverPhoto-20210913_220545.jpg"
+            cover = null
 //            cover = ""
         }
         return cover
@@ -182,7 +182,7 @@ fun fakeBook(
         bookId = id,
         title = title,
         subtitle = "How Subs Change Books",
-        cover = "content://net.droopia.net.fileprovider/my_images/Android/data/net.droopia.net/cache/My_Captured_Photo.jpg",
+        cover = "",
         isbn10 = "0123456789",
         isbn13 = isbn13,
         selfLink = "https://www.googleapis.com/books/v1/volumes/IAmWzgEACAAJ",

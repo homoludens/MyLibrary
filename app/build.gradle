@@ -101,10 +101,15 @@ dependencies {
     // jsoup HTML parser library @ https://jsoup.org/
     implementation 'org.jsoup:jsoup:1.14.3'
 
-
+    // get web pages
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
 
+    // ocr ml lib
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:17.0.0'
+
+    // book photo and crop
+    implementation 'com.github.zynkware:Document-Scanning-Android-SDK:1.0.1'
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
 
 
 }

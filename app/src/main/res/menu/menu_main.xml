@@ -13,13 +13,12 @@
         android:title="@string/book_edit"
         app:showAsAction="never" />
 
-
-
     <item android:id="@+id/menu_edit"
         android:icon="@drawable/ic_edit"
+        android:orderInCategory="99"
         android:title="@string/book_edit"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always|collapseActionView"
+        app:showAsAction="never|collapseActionView"
         />
 
     <item android:id="@+id/search_menu_item"
@@ -37,12 +36,12 @@
     <item android:id="@+id/menu_delete"
         android:icon="@drawable/ic_menu_delete"
         android:title="Delete Book"
-        app:showAsAction="always"
+        app:showAsAction="never"
         />
 
     <item android:id="@+id/menu_save"
         android:icon="@drawable/ic_menu_save"
         android:title="Save Book"
-        app:showAsAction="always"
+        app:showAsAction="never"
         />
 </menu>

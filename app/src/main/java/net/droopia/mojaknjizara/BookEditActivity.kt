@@ -62,9 +62,9 @@ class BookEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_edit)
 //        val Rid = R.id
-        val RidToolbar = R.id.toolbar
-        Log.i(TAG_NEW, "FFF BookEditActiviti mUri: $RidToolbar")
-        setSupportActionBar(findViewById(R.id.toolbar))
+//        val RidToolbar = R.id.toolbar
+//        Log.i(TAG_NEW, "FFF BookEditActiviti mUri: $RidToolbar")
+//        setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

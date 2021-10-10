@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.beust.klaxon.Klaxon
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-//import net.droopia.mojaknjizara.NewBookActivity
+import net.droopia.mojaknjizara.NewBookActivity
 import net.droopia.mojaknjizara.R
 import net.droopia.mojaknjizara.TAG_NEW
 import net.droopia.mojaknjizara.database.Book
@@ -36,13 +36,13 @@ class LibrarySearchAdapter() : ListAdapter<Book, SearchViewHolder>(SEARCH_COMPAR
 
         viewHolder.bindTo(current)
 
-//        viewHolder.itemView.setOnClickListener {
-//            val intent = Intent(it.context, NewBookActivity::class.java).apply {
-//                val book: String = Klaxon().toJsonString(current)
-//                putExtra(EXTRA_BOOK, book)
-//            }
-//            it.context.startActivity(intent)
-//        }
+        viewHolder.itemView.setOnClickListener {
+            val intent = Intent(it.context, NewBookActivity::class.java).apply {
+                val book: String = Klaxon().toJsonString(current)
+                putExtra(EXTRA_BOOK, book)
+            }
+            it.context.startActivity(intent)
+        }
     }
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

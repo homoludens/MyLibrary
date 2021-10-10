@@ -72,14 +72,9 @@
             android:layout_margin="20dp"
 
             android:text="OCRed text"
-            android:textAppearance="@style/TextAppearance.AppTheme.Headline5"
             android:textIsSelectable="true" />
 
 
     </LinearLayout>
-
-
-
-
 
 </ScrollView>
