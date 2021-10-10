@@ -7,6 +7,20 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_edit_text"
+        android:orderInCategory="99"
+        android:title="@string/book_edit"
+        app:showAsAction="never" />
+
+
+
+    <item android:id="@+id/menu_edit"
+        android:icon="@drawable/ic_edit"
+        android:title="@string/book_edit"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView"
+        />
 
     <item android:id="@+id/search_menu_item"
         android:icon="@drawable/ic_magnify_glass"
@@ -17,6 +31,18 @@
     <item android:id="@+id/search_scan_item"
         android:icon="@drawable/ic_barcode_black"
         android:title="Scan Barcode"
+        app:showAsAction="always"
+        />
+
+    <item android:id="@+id/menu_delete"
+        android:icon="@drawable/ic_menu_delete"
+        android:title="Delete Book"
+        app:showAsAction="always"
+        />
+
+    <item android:id="@+id/menu_save"
+        android:icon="@drawable/ic_menu_save"
+        android:title="Save Book"
         app:showAsAction="always"
         />
 </menu>

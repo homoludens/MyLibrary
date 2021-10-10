@@ -27,5 +27,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
     <string name="title_search_book_activity">Search cobiss</string>
+    <string name="book_edit">Edit book</string>
+
 
 </resources>
