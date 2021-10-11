@@ -1,31 +1,24 @@
 package net.droopia.mojaknjizara
 
 
-import android.Manifest
-import android.R.attr
-import android.annotation.TargetApi
+//import com.labters.documentscanner.ImageCropActivity
+//import com.labters.documentscanner.helpers.ScannerConstants
 import android.app.Activity
-import android.content.ContentUris
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.icu.number.NumberRangeFormatter.with
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.StrictMode
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -37,30 +30,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
-import androidx.core.view.drawToBitmap
-import androidx.lifecycle.LiveData
-import com.google.android.gms.common.GooglePlayServicesIncorrectManifestValueException
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
-//import com.labters.documentscanner.ImageCropActivity
-//import com.labters.documentscanner.helpers.ScannerConstants
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.zynksoftware.documentscanner.ui.DocumentScanner
-import net.droopia.mojaknjizara.api.CobissModel
 import net.droopia.mojaknjizara.database.Book
 import net.droopia.mojaknjizara.database.BookViewModel
 import net.droopia.mojaknjizara.database.BookViewModelFactory
 import net.droopia.mojaknjizara.database.BooksApplication
-import net.droopia.mojaknjizara.ui.main.EXTRA_BOOK
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
-import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -144,11 +126,33 @@ class BookPhotoActivity : AppCompatActivity() {
 
     }
 
+
+//    var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//            // There are no request codes
+//            val data: Intent? = result.data
+////            doSomeOperations()
+//        }
+//    }
+//
+//    fun openSomeActivityForResult() {
+//        val intent = Intent(this, AppScanActivity::class.java)
+//        resultLauncher.launch(intent)
+//    }
+
+
     private fun cropPhoto(bookId: Long) {
 
 
-        AppScanActivity.start(this)
+        val intent = Intent(applicationContext, AppScanActivity::class.java).apply {
+            putExtra(EXTRA_ID, bookId)
+        }
+        startActivityForResult(intent, OPERATION_CROP_PHOTO)
 
+//        AppScanActivity.start(this, bookId)
+
+//        this.book?.bookId
+//
 //        Thread(Runnable {
 //
 //            val book = bookViewModel.getBookOnce(bookId)
@@ -240,6 +244,12 @@ class BookPhotoActivity : AppCompatActivity() {
             OPERATION_CROP_PHOTO ->
                 if (resultCode == Activity.RESULT_OK) {
 
+                    val extras = intent.extras
+//                    val data_test = data?.data
+//                    val scannerImageCroppedResult = data?.getExtras()?.getString("scannerResults")
+                    val mUri2 = data?.getExtras()?.getString("mUri")
+                    Log.i(TAG_NEW, "OPERATION_CROP_PHOTO onActivityResult data: $data")
+                    Log.i(TAG_NEW, "OPERATION_CROP_PHOTO onActivityResult mUri: $mUri2")
                     Toast.makeText(this, "Crop OK", Toast.LENGTH_LONG).show()
 //                    if (ScannerConstants.selectedImageBitmap != null) {
 //                        mImageView?.setImageBitmap(ScannerConstants.selectedImageBitmap)
@@ -247,7 +257,18 @@ class BookPhotoActivity : AppCompatActivity() {
 //                    } else {
 //                        Toast.makeText(this, "Not OK", Toast.LENGTH_LONG).show()
 //                    }
-                    book?.cover = mUri.toString()
+                    book?.cover = mUri2
+
+                    Picasso.get().load(mUri2).into(mImageView, object : Callback {
+                        override fun onSuccess() {
+                            println("cover loaded")
+                        }
+
+                        override fun onError(e: Exception) {
+                            println("cover loaded")
+                        }
+                    })
+
                     book?.let { bookViewModel.update(it) }
                 }
         }
