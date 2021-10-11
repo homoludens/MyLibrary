@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import net.droopia.mojaknjizara.BookViewActivity
 //import net.droopia.mojaknjizara.BookViewActivity
 import net.droopia.mojaknjizara.EXTRA_ID
 import net.droopia.mojaknjizara.R
@@ -54,10 +55,10 @@ class BookListAdapter : ListAdapter<Book, BookListAdapter.BookViewHolder>(BOOKS_
             Snackbar.make(it, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
 
-//            val intent = Intent(it.context, BookViewActivity::class.java).apply {
-//                putExtra(EXTRA_ID, current.bookId)
-//            }
-//            it.context.startActivity(intent)
+            val intent = Intent(it.context, BookViewActivity::class.java).apply {
+                putExtra(EXTRA_ID, current.bookId)
+            }
+            it.context.startActivity(intent)
         }
     }
 
