@@ -55,7 +55,7 @@ class SecondFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
-            setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
+            setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 3)
 
         }
     }
@@ -64,6 +64,9 @@ class SecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+
         val root = inflater.inflate(R.layout.fragment_second, container, false)
         val recyclerView = root.findViewById<RecyclerView>(R.id.book_list_view)
 //        val sortView = root.findViewById<MaterialButton>(R.id.fragment_sort_button)
@@ -135,6 +138,7 @@ class SecondFragment : Fragment() {
             manual
         )
 
+//        return binding.root
         return root
     }
 
@@ -309,12 +313,12 @@ class SecondFragment : Fragment() {
 
 
 
-//    private var _binding: FragmentSecondBinding? = null
-//
-//    // This property is only valid between onCreateView and
-//    // onDestroyView.
-//    private val binding get() = _binding!!
-//
+    private var _binding: FragmentSecondBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
 //    override fun onCreateView(
 //        inflater: LayoutInflater, container: ViewGroup?,
 //        savedInstanceState: Bundle?
@@ -324,17 +328,17 @@ class SecondFragment : Fragment() {
 //        return binding.root
 //
 //    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        binding.buttonSecond.setOnClickListener {
-//            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-//        }
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonSecond.setOnClickListener {
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
