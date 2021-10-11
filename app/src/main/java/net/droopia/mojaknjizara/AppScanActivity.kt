@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import com.tbruyelle.rxpermissions3.RxPermissions
-import net.droopia.mojaknjizara.adapters.ImageAdapter
 
 class AppScanActivity : ScanActivity() {
 
@@ -33,7 +32,6 @@ class AppScanActivity : ScanActivity() {
         private var bookId: Long = 0
         fun start(context: Context, bookId: Long) {
 //            this.bookId = bookId
-
             val intent = Intent(context, AppScanActivity::class.java)
             context.startActivity(intent)
         }
@@ -58,25 +56,11 @@ class AppScanActivity : ScanActivity() {
     }
 
     override fun onSuccess(scannerResults: ScannerResults) {
-//        var sRa = scannerResults.croppedImageFile?.absolutePath
-//        var sRc = scannerResults.croppedImageFile?.canonicalPath
-//        var sRp = scannerResults.croppedImageFile?.path
-//        intent?.putExtra(EXTRA_ID, sR)
-//        Log.d(TAG, "scannerResults.croppedImageFile.canonicalPath: $sRa")
-//        Log.d(TAG, "scannerResults.croppedImageFile.absolutePath: $sRc")
-//        Log.d(TAG, "scannerResults.croppedImageFile.path: $sRp")
-//        intent.putExtra("scannerResults", sRp);
-//        setResult(RESULT_OK, getIntent());
-
-//        initViewPager(scannerResults)
-
         checkForStoragePermissions(scannerResults.croppedImageFile!!)
 
         intent.putExtra("mUri", mUri.toString());
         setResult(RESULT_OK, intent)
         finish();
-
-
     }
 
     override fun onClose() {
@@ -108,7 +92,7 @@ class AppScanActivity : ScanActivity() {
     }
 
     private fun saveImage(image: File) {
-        showProgressBar()
+//        showProgressBar()
 
         val date = Date()
         val formatter = SimpleDateFormat("dd_MM_yyyy_HH_mm_ss:mm", Locale.getDefault())
@@ -143,73 +127,10 @@ class AppScanActivity : ScanActivity() {
             out.close()
         }
 
-        hideProgessBar()
+//        hideProgessBar()
 //        showAlertDialog(getString(R.string.photo_saved), "", getString(R.string.ok_label))
-
     }
 
-    private fun showProgressBar() {
-//        progressLayoutApp.isVisible = true
-    }
-
-    private fun hideProgessBar() {
-//        progressLayoutApp.isVisible = false
-    }
-//
-    private fun initViewPager(scannerResults: ScannerResults) {
-        val fileList = ArrayList<File>()
-
-        scannerResults.originalImageFile?.let {
-            Log.d(TAG, "ZDCoriginalPhotoFile size ${it.sizeInMb}")
-        }
-
-        scannerResults.croppedImageFile?.let {
-            Log.d(TAG, "ZDCcroppedPhotoFile size ${it.sizeInMb}")
-        }
-
-        scannerResults.transformedImageFile?.let {
-            Log.d(TAG, "ZDCtransformedPhotoFile size ${it.sizeInMb}")
-        }
-
-        scannerResults.originalImageFile?.let { fileList.add(it) }
-        scannerResults.transformedImageFile?.let { fileList.add(it) }
-        scannerResults.croppedImageFile?.let { fileList.add(it) }
-
-//        val targetAdapter = ImageAdapter(this, fileList, this)
-//        viewPagerTwo.adapter = targetAdapter
-//        viewPagerTwo.isUserInputEnabled = false
-//
-//        previousButton.setOnClickListener {
-//            viewPagerTwo.currentItem = viewPagerTwo.currentItem - 1
-//            nextButton.isVisible = true
-//            if (viewPagerTwo.currentItem == 0) {
-//                previousButton.isVisible = false
-//            }
-//        }
-//
-//        nextButton.setOnClickListener {
-//            viewPagerTwo.currentItem = viewPagerTwo.currentItem + 1
-//            previousButton.isVisible = true
-//            if (viewPagerTwo.currentItem == fileList.size - 1) {
-//                nextButton.isVisible = false
-//            }
-//        }
-    }
-//
-//
-//
-    private fun showAlertDialog(title: String?, message: String?, buttonMessage: String) {
-        alertDialogBuilder = android.app.AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton(buttonMessage) { dialog, which ->
-
-            }
-        alertDialog?.dismiss()
-        alertDialog = alertDialogBuilder?.create()
-        alertDialog?.setCanceledOnTouchOutside(false)
-        alertDialog?.show()
-    }
 
     val File.size get() = if (!exists()) 0.0 else length().toDouble()
     val File.sizeInKb get() = size / 1024
