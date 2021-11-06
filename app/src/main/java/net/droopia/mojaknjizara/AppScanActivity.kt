@@ -58,13 +58,16 @@ class AppScanActivity : ScanActivity() {
     override fun onSuccess(scannerResults: ScannerResults) {
         checkForStoragePermissions(scannerResults.croppedImageFile!!)
 
-        intent.putExtra("mUri", mUri.toString());
+//        intent.putExtra("mUri", mUri.toString());
         setResult(RESULT_OK, intent)
         finish();
+
+
     }
 
     override fun onClose() {
         Log.d(TAG, "onClose")
+
         finish()
     }
 
@@ -98,7 +101,12 @@ class AppScanActivity : ScanActivity() {
         val formatter = SimpleDateFormat("dd_MM_yyyy_HH_mm_ss:mm", Locale.getDefault())
         val dateFormatted = formatter.format(date)
 
-        val to = File(Environment.getExternalStorageDirectory().absolutePath + "/" + DIRECTORY_DCIM + "/zynkphoto${dateFormatted}.jpg")
+
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val to = File( getExternalFilesDir(Environment.DIRECTORY_PICTURES)  , "BookCoverPhoto-$timeStamp.jpg")
+
+
+//        val to = File(Environment.getExternalStorageDirectory().absolutePath + "/" + DIRECTORY_DCIM + "/zynkphoto${dateFormatted}.jpg")
 
         val inputStream: InputStream = FileInputStream(image)
 
@@ -110,6 +118,8 @@ class AppScanActivity : ScanActivity() {
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM")
             val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
             mUri = imageUri!!
+
+            intent.putExtra("mUri", mUri.toString());
             val out = resolver.openOutputStream(imageUri!!)
             out?.write(image.readBytes())
             out?.flush()
@@ -123,8 +133,12 @@ class AppScanActivity : ScanActivity() {
                 out.write(buf, 0, len)
             }
             inputStream.close()
+            mUri = Uri.fromFile(to)
+            intent.putExtra("mUri", mUri.toString());
             out.flush()
             out.close()
+
+
         }
 
 //        hideProgessBar()

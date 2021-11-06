@@ -17,7 +17,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_book_logo_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MojaKnjizara">
+        android:theme="@style/Theme.MojaKnjizara"
+        android:requestLegacyExternalStorage="true">
 
         <activity
             android:name=".SettingsActivity"

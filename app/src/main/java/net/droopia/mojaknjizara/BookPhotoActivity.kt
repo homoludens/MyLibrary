@@ -95,6 +95,7 @@ class BookPhotoActivity : AppCompatActivity() {
 
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val capturedImage = File( getExternalFilesDir(Environment.DIRECTORY_PICTURES)  , "BookCoverPhoto-$timeStamp.jpg")
+
         if(capturedImage.exists()) {
             capturedImage.delete()
         }
@@ -147,6 +148,7 @@ class BookPhotoActivity : AppCompatActivity() {
         val intent = Intent(applicationContext, AppScanActivity::class.java).apply {
             putExtra(EXTRA_ID, bookId)
         }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mUri)
         startActivityForResult(intent, OPERATION_CROP_PHOTO)
 
 //        AppScanActivity.start(this, bookId)
@@ -247,9 +249,9 @@ class BookPhotoActivity : AppCompatActivity() {
                     val extras = intent.extras
 //                    val data_test = data?.data
 //                    val scannerImageCroppedResult = data?.getExtras()?.getString("scannerResults")
+
                     val mUri2 = data?.getExtras()?.getString("mUri")
-                    Log.i(TAG_NEW, "OPERATION_CROP_PHOTO onActivityResult data: $data")
-                    Log.i(TAG_NEW, "OPERATION_CROP_PHOTO onActivityResult mUri: $mUri2")
+                    Log.i(TAG_NEW, "OPERATION_CROP_PHOTO onActivityResult mUri2: $mUri2")
                     Toast.makeText(this, "Crop OK", Toast.LENGTH_LONG).show()
 //                    if (ScannerConstants.selectedImageBitmap != null) {
 //                        mImageView?.setImageBitmap(ScannerConstants.selectedImageBitmap)
@@ -258,17 +260,6 @@ class BookPhotoActivity : AppCompatActivity() {
 //                        Toast.makeText(this, "Not OK", Toast.LENGTH_LONG).show()
 //                    }
                     book?.cover = mUri2
-
-                    Picasso.get().load(mUri2).into(mImageView, object : Callback {
-                        override fun onSuccess() {
-                            println("cover loaded")
-                        }
-
-                        override fun onError(e: Exception) {
-                            println("cover loaded")
-                        }
-                    })
-
                     book?.let { bookViewModel.update(it) }
                 }
         }

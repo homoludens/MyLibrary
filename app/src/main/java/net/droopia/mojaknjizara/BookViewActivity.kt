@@ -115,8 +115,6 @@ class BookViewActivity : AppCompatActivity() {
         current.yearString()?.let { findViewById<TextView>(R.id.book_view_year).text = "$it" }
         current.publisher?.let { findViewById<TextView>(R.id.book_view_publisher).text = it }
         current.dateAdded?.let { findViewById<TextView>(R.id.book_view_date_added).text = LocalDate.ofEpochDay(it).format(viewDateFormatter) }
-        current.dateStarted?.let { findViewById<TextView>(R.id.book_view_date_started).text = LocalDate.ofEpochDay(it).format(viewDateFormatter) }
-        current.dateRead?.let { findViewById<TextView>(R.id.book_view_date_shelved).text = LocalDate.ofEpochDay(it).format(viewDateFormatter) }
         current.notes?.let {
             val notesView = findViewById<TextView>(R.id.book_view_notes)
             notesView.visibility = View.VISIBLE
@@ -128,25 +126,6 @@ class BookViewActivity : AppCompatActivity() {
             desc.visibility = View.VISIBLE
             desc.text = current.description
         }
-
-//        val shelfDropdown = findViewById<Button>(R.id.book_view_shelf_dropdown)
-//        shelfDropdown.text = current.shelfString()
-//        shelfDropdown.setOnClickListener { view ->
-//            view?.let { v -> showMenu(v, R.menu.shelf_menu) }
-//        }
-
-        val ratingBar = findViewById<RatingBar>(R.id.book_view_rating_bar)
-        current.rating?.let { ratingBar.rating = it.toFloat() }
-        ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { rateBar, rating, fromUser ->
-            current.rating = rating.toInt()
-            bookViewModel.update(current)
-            Snackbar.make(
-                    findViewById(R.id.book_view_activity),
-                    "Your new rating has been recorded",
-                    Snackbar.LENGTH_LONG
-            ).setAction("Action", null).show()
-        }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
