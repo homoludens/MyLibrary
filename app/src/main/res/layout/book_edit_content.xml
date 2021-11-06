@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="200dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
@@ -68,12 +68,13 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/book_upload_book"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="48dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="200dp"
             android:insetTop="0dp"
             android:insetBottom="0dp"
+            android:maxWidth="48dp"
             android:minWidth="48dp"
             android:minHeight="48dp"
             android:paddingLeft="12dp"
@@ -81,6 +82,7 @@
             card_view:backgroundTint="@color/black"
             card_view:icon="@drawable/ic_sync"
             card_view:iconPadding="0dp"
+
             card_view:layout_constraintEnd_toStartOf="@id/book_edit_image_edit"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@id/book_edit_cover_wrapper"
@@ -93,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:minWidth="48dp"
-            android:text="Plus to uploat to website, pencil to edit image"
+            android:text="Plus to upload to website, pencil to edit image"
 
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textIsSelectable="true"
@@ -188,11 +190,7 @@
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/book_edit_author" >
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords"
-                />
+
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -212,6 +210,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
                 />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -426,37 +425,28 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:inputType="textCapSentences|textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
-<!--        <androidx.core.widget.NestedScrollView
-            android:id="@+id/book_edit_notes_scroll"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:maxHeight="180dp"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/book_edit_notes"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="14dp"
+            android:hint="Thoughts"
+            android:nestedScrollingEnabled="true"
             android:scrollbars="vertical"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/book_edit_description_scroll">-->
+            card_view:layout_constraintTop_toBottomOf="@id/book_edit_description">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/book_edit_notes"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="14dp"
-                android:scrollbars="vertical"
+                android:inputType="textCapSentences|textMultiLine"
+                android:lines="5"
                 android:nestedScrollingEnabled="true"
-                android:hint="Thoughts"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@id/book_edit_description">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:lines="5"
-                    android:nestedScrollingEnabled="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:inputType="textCapSentences|textMultiLine" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/book_edit_date_added_label"
