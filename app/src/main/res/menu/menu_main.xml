@@ -44,4 +44,10 @@
         android:title="Save Book"
         app:showAsAction="never"
         />
+
+    <item android:id="@+id/action_sync"
+        android:icon="@drawable/ic_sync"
+        android:title="Sync Books"
+        app:showAsAction="never"
+        />
 </menu>

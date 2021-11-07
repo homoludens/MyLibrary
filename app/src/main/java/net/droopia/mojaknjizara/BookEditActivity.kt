@@ -368,7 +368,7 @@ class BookEditActivity : AppCompatActivity() {
      *
      * @param book Book object of currently viewd book
      */
-    fun postBlog(current: Book){
+    fun postBlog(current: Book) {
 
 
         val urlDev = "http://10.0.2.2:8000/api/blogpost"

@@ -95,6 +95,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 return true
             }
+
+            R.id.action_sync ->  {
+                val intent = Intent(applicationContext, SyncActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
 
