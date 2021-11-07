@@ -19,7 +19,6 @@
         android:roundIcon="@mipmap/ic_book_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MojaKnjizara">
-        <activity android:name=".SyncActivity"></activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -38,6 +37,9 @@
         <activity
             android:name=".NewBookActivity"
             android:label="@string/title_search_book_activity" />
+        <activity
+            android:name=".SyncActivity"
+            android:label="Sync Books to web" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
