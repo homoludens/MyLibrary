@@ -7,27 +7,11 @@
     android:id="@+id/new_book_activity"
     tools:context=".NewBookActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:theme="@style/Theme.MojaKnjizara.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.MojaKnjizara.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:fillViewport="true"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:paddingBottom="10dp">
         <include layout="@layout/new_book_content" />
     </ScrollView>

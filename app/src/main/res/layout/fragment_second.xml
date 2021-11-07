@@ -22,7 +22,7 @@
         android:id="@+id/num_results_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search Open Library"
+        android:hint="Search library"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="0dp"

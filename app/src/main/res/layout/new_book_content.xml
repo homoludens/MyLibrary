@@ -42,19 +42,6 @@
                 card_view:layout_constraintStart_toEndOf="@+id/new_book_author"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/new_book_shelf_dropdown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shelve Book"
-                card_view:cornerRadius="15dp"
-                card_view:icon="@drawable/ic_dropdown_arrow"
-                card_view:layout_constraintBottom_toTopOf="@+id/new_book_publisher"
-
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.5"
-                card_view:layout_constraintTop_toBottomOf="@+id/new_book_cover_image" />
-
             <TextView
                 android:id="@+id/new_book_title"
                 android:layout_width="0dp"
@@ -93,7 +80,7 @@
                 android:textIsSelectable="true"
                 card_view:layout_constraintEnd_toStartOf="@+id/new_book_cover_image"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/new_book_shelf_dropdown" />
+                card_view:layout_constraintTop_toBottomOf="@+id/new_book_author" />
 
             <TextView
                 android:id="@+id/new_book_year"
@@ -365,7 +352,6 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:text="Cancel"
-        android:textAppearance="@style/Widget.AppCompat.Button"
         card_view:layout_constraintStart_toStartOf="parent"
         card_view:layout_constraintTop_toBottomOf="@id/new_book_btn_merge" />
 

@@ -71,7 +71,7 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
 
     var numResults: MutableLiveData<Int> = MutableLiveData<Int>(0)
     var bookDetails: MutableLiveData<BookDetails> = MutableLiveData<BookDetails>()
-
+    var bookFull: MutableLiveData<Book> = MutableLiveData<Book>()
     /**
      * get search results live data list if Book.
      * @return return search results
@@ -175,6 +175,8 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
                 val book_text = response2
                 val book_object: Book = risToBook(book_text)
                 println("getCobissBookDetails book_object: ${book_object}")
+                bookFull.value  = book_object
+
                 val isbn13 = book_object.isbn13
                 val isbn10 = book_object.isbn10
                 val selfLink = book_object.selfLink
@@ -196,6 +198,10 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
                     series,
                     language?.replace("/languages/", "")?.capitalize(),
                 )
+
+                val test_book_details = bookDetails.value
+                Log.e(TAG_NEW, "CobissModel.getCobissBookDetails: $book_object")
+                Log.e(TAG_NEW, "CobissModel.getCobissBookDetails bookDetails: $test_book_details")
             },
             {
                 println("volleyError! $it")
@@ -373,11 +379,13 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
                 val links: Elements = doc.select("tr[data-cobiss-id]")
 
                 if (!links.isEmpty()) {
+
+//                    getCobissBook(links)
+
                     for (link in links) {
                         val book_object: Book = tableDataToBook(link)
                         bookList.add(book_object)
                     }
-
                     searches.setValue(bookList.subList(0, min(MAX_SEARCH_RESULTS, bookList.size)))
                     numResults.value = bookList.size
                 } else {
@@ -428,6 +436,47 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
         return ""
     }
 
+
+    /**
+     * Search COBISS site for data on book
+     * endpoint is https://plus.sr.cobiss.net/opac7/bib/risCit/$book_bib
+     *
+     * get search results live data list if Book.
+     * @param selfLink permanent link to requested Book
+     */
+    fun getCobissBook(links: Elements) =  viewModelScope.launch {
+
+        val bookList = mutableListOf<Book>()
+
+        for (link in links) {
+
+            val book_bib = link.attr("data-cobiss-id")
+            val selfLink = "https://plus.sr.cobiss.net/opac7/bib/risCit/$book_bib"
+
+            val url_book = selfLink
+            val stringRequestBook = StringRequest(Request.Method.GET, url_book,
+                { response2 ->
+                    val book_text = response2
+                    val book_object: Book = risToBook(book_text)
+                    Log.e(TAG_NEW, "CobissModel.getCobissBook: $book_object")
+                    bookList.add(book_object)
+
+                },
+                {
+                    println("volleyError! $it")
+                    Log.e("BK", "Volley Error $it")
+                })
+
+            RequestQueueSingleton.getInstance(getApplication()).addToRequestQueue(stringRequestBook)
+        }
+
+        searches.setValue(bookList.subList(0, min(MAX_SEARCH_RESULTS, bookList.size)))
+        numResults.value = bookList.size
+
+    }
+
+
+
     /**
      * Convert COBISS table row of list of results to Book
      *
@@ -439,7 +488,9 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
         val book_bib = link.attr("data-cobiss-id")
         val title = link.attr("data-title")
         val author = link.select("span.author").first()?.text()
-        val year = link.select("span.publishDate-data").first()?.text()
+        val year_dirty = link.select("span.publishDate-data").first()?.text()
+        var year = year_dirty?.filter { it.isDigit() }
+
         val selfLink = "https://plus.sr.cobiss.net/opac7/bib/risCit/$book_bib"
 
         val book: Book = Book(
@@ -478,15 +529,18 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
      * @param book RIS string
      * @return Book object
      */
-    private fun risToBook(book: String): Book {
+    fun risToBook(book_string: String): Book {
 
-        val title       = parseRisField("(?:.*TI.*)-\\s(.*)", book)
-        val author      = parseRisField("(?:.*AU.*)-\\s(.*)", book)
-        val publishYear = parseRisField("(?:.*PY.*)-\\s(.*)", book)
-        val publisher   = parseRisField("(?:.*PB.*)-\\s(.*)", book)
-        val isbn10      = parseRisField("(?:.*SN.*)-\\s(.*)", book).replace("-","").let{if (it.length == 10) it else null }
-        val isbn13      = parseRisField("(?:.*SN.*)-\\s(.*)", book).replace("-","").let{if (it.length == 13) it else null }
-        val numberPages = parseRisField("(?:.*SP.*)-\\s(.*)", book)
+        val title       = parseRisField("(?:.*TI.*)-\\s(.*)", book_string)
+        val author      = parseRisField("(?:.*AU.*)-\\s(.*)", book_string)
+        val publishYearDirty = parseRisField("(?:.*PY.*)-\\s(.*)", book_string)
+        val publisher   = parseRisField("(?:.*PB.*)-\\s(.*)", book_string)
+        val isbn10      = parseRisField("(?:.*SN.*)-\\s(.*)", book_string).replace("-","").let{if (it.length == 10) it else null }
+        val isbn13      = parseRisField("(?:.*SN.*)-\\s(.*)", book_string).replace("-","").let{if (it.length == 13) it else null }
+        val numberPagesDirty = parseRisField("(?:.*SP.*)-\\s(.*)", book_string)
+
+        var publishYear = publishYearDirty?.filter { it.isDigit() }
+        val numberPages = numberPagesDirty?.filter { it.isDigit() }
 
         val book: Book = Book(
             bookId = 0,
@@ -499,11 +553,9 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
             author = author,
             authorExtras = null,
             publisher = publisher,
-//            year = publishYear as? Int,
-            year = 1990,
+            year = publishYear.toInt(),
             originalYear = null,
-//            numberPages = numberPages as? Int,
-            numberPages = 111,
+            numberPages = numberPages.toInt(),
             progress = null,
             series = null,
             language = null,

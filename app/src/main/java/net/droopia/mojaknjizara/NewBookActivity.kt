@@ -11,9 +11,13 @@ import androidx.activity.viewModels
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.viewModelScope
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
 import com.beust.klaxon.Klaxon
 import com.google.android.material.button.MaterialButton
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 //import net.droopia.mojaknjizara.api.CobissModel
 import net.droopia.mojaknjizara.database.*
 import net.droopia.mojaknjizara.ui.main.EXTRA_BOOK
@@ -21,12 +25,14 @@ import java.time.LocalDate
 
 import net.droopia.mojaknjizara.api.MAX_SEARCH_RESULTS
 import net.droopia.mojaknjizara.api.CobissModel
+import net.droopia.mojaknjizara.api.RequestQueueSingleton
 import net.droopia.mojaknjizara.database.BookViewModel
 import net.droopia.mojaknjizara.database.BookViewModelFactory
 import net.droopia.mojaknjizara.database.BooksApplication
 import net.droopia.mojaknjizara.database.emptyBook
 import net.droopia.mojaknjizara.ui.main.LibrarySearchAdapter
-
+import org.jsoup.select.Elements
+import androidx.lifecycle.viewModelScope
 
 //const val TAG_NEW = "BookNew"
 const val EXTRA_NEW = "new_book"
@@ -49,22 +55,9 @@ class NewBookActivity : AppCompatActivity() {
         val bookInfo: String? = intent.extras?.getString(EXTRA_BOOK)
 
         val newBook = bookInfo?.let { Klaxon().parse<Book>(it) }
-        var duplicateBook: Book? = null
 
-        openLibraryViewModel.bookDetails.observe(this, { observable ->
-            observable?.let { details ->
-                newBook?.isbn13 = details.isbn13 ?: newBook?.isbn13
-                newBook?.isbn10 = details.isbn10 ?: newBook?.isbn10
-                newBook?.publisher = details.publisher ?: newBook?.publisher
-                newBook?.year = details.publishYear ?: newBook?.year
-                newBook?.numberPages = details.numberPages ?: newBook?.numberPages
-                newBook?.description = details.description ?: newBook?.description
-                newBook?.series = details.series ?: newBook?.series
-                newBook?.language = details.language ?: newBook?.language
-                newBook?.selfLink = details.selfLink ?: newBook?.selfLink
-                newBook?.let{ displayNewBook(it) }
-            }
-        })
+
+        var duplicateBook: Book? = null
 
         newBook?.let {
 
@@ -78,6 +71,53 @@ class NewBookActivity : AppCompatActivity() {
 //            }
             displayNewBook(it)
         }
+
+
+
+        openLibraryViewModel.bookFull.observe(this, { observable ->
+            observable?.let { details ->
+
+                newBook?.title = details.title
+                newBook?.author = details.author ?: newBook?.author
+                newBook?.isbn13 = details.isbn13 ?: newBook?.isbn13
+                newBook?.isbn10 = details.isbn10 ?: newBook?.isbn10
+                newBook?.publisher = details.publisher ?: newBook?.publisher
+                newBook?.year = details.year ?: newBook?.year
+                newBook?.numberPages = details.numberPages ?: newBook?.numberPages
+                newBook?.description = details.description ?: newBook?.description
+                newBook?.series = details.series ?: newBook?.series
+                newBook?.language = details.language ?: newBook?.language
+                newBook?.selfLink = details.selfLink ?: newBook?.selfLink
+
+
+                newBook?.let{
+                    displayNewBook(it)
+                    Log.e(TAG_NEW, "openLibraryViewModel.bookDetails.observe: $it")
+                }
+            }
+        })
+
+//        openLibraryViewModel.bookDetails.observe(this, { observable ->
+//            observable?.let { details ->
+//                newBook?.isbn13 = details.isbn13 ?: newBook?.isbn13
+//                newBook?.isbn10 = details.isbn10 ?: newBook?.isbn10
+//                newBook?.publisher = details.publisher ?: newBook?.publisher
+//                newBook?.year = details.publishYear ?: newBook?.year
+//                newBook?.numberPages = details.numberPages ?: newBook?.numberPages
+//                newBook?.description = details.description ?: newBook?.description
+//                newBook?.series = details.series ?: newBook?.series
+//                newBook?.language = details.language ?: newBook?.language
+//                newBook?.selfLink = details.selfLink ?: newBook?.selfLink
+//
+//
+//                newBook?.let{
+//                    displayNewBook(it)
+//                    Log.e(TAG_NEW, "openLibraryViewModel.bookDetails.observe: $it")
+//                }
+//            }
+//        })
+
+
 
         val btnAdd = findViewById<MaterialButton>(R.id.new_book_btn_add)
         btnAdd.setOnClickListener {
@@ -232,5 +272,4 @@ class NewBookActivity : AppCompatActivity() {
         }
         return true
     }
-
 }

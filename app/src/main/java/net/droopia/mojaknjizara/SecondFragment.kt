@@ -75,6 +75,7 @@ class SecondFragment : Fragment() {
         val scan = root.findViewById<MaterialButton>(R.id.fragment_scan_button)
         val search = root.findViewById<MaterialButton>(R.id.fragment_search_open_library_button)
         recyclerView.adapter = adapter
+        recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
 //        sortView?.setOnClickListener { showMenu(it) }
