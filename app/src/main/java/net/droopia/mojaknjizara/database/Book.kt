@@ -163,6 +163,27 @@ data class Book(
         }
         return true
     }
+
+    fun shelveSync(target: ShelfType, bookViewModel: BookViewModel?): Boolean {
+        if (shelf != target.shelf) {
+            shelf = target.shelf
+            when (target) {
+                ShelfType.ReadShelf -> {
+                    dateRead = LocalDate.now().toEpochDay()
+                }
+                ShelfType.CurrentShelf -> {
+                    dateStarted = LocalDate.now().toEpochDay()
+                }
+                else -> {}
+            }
+            if (dateAdded == null) {
+                dateAdded = LocalDate.now().toEpochDay()
+            }
+
+            bookViewModel?.update(this)
+        }
+        return true
+    }
 }
 
 

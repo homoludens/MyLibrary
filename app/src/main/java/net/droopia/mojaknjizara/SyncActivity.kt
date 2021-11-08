@@ -21,10 +21,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.squareup.picasso.Picasso
-import net.droopia.mojaknjizara.database.Book
-import net.droopia.mojaknjizara.database.BookViewModel
-import net.droopia.mojaknjizara.database.BookViewModelFactory
-import net.droopia.mojaknjizara.database.BooksApplication
+import net.droopia.mojaknjizara.database.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -43,7 +40,7 @@ class SyncActivity : AppCompatActivity() {
     private var txtView: TextView? = null
     private val handler = Handler()
 
-    private var unsyncedBooksList : MutableList<Book> = mutableListOf()
+    private var unsyncedBooksList : List<Book> = emptyList<Book>()
 
     private val bookViewModel: BookViewModel by viewModels {
         BookViewModelFactory((application as BooksApplication).repository)
@@ -67,8 +64,8 @@ class SyncActivity : AppCompatActivity() {
         bookViewModel.toReadShelf?.observe(this, { observable ->
             if (observable != null) {
                 for (book: Book in observable) {
-                    unsyncedBooksList.add(book)
-
+                    unsyncedBooksList += book
+//                    unsyncedBooksList.add(book)
                 }
             }
         })
@@ -97,7 +94,7 @@ class SyncActivity : AppCompatActivity() {
 
                     val book = iterate.next()
                     println(book)
-//                    postBook(book)
+                    postBook(book)
 
                     i += 1
                     handler.post(Runnable {
@@ -126,6 +123,8 @@ class SyncActivity : AppCompatActivity() {
      */
     fun postBook(current: Book) {
 
+
+        current?.let { it.shelveSync(ShelfType.ReadShelf, bookViewModel) }
 
         val urlDev = "http://10.0.2.2:8000/api/blogpost"
 
