@@ -210,7 +210,7 @@ class SyncActivity : AppCompatActivity() {
 
             //Convert bitmap to byte array
             val bos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos) // YOU can also save it in JPEG
             val bitmapdata = bos.toByteArray()
 
             //write the bytes in file
