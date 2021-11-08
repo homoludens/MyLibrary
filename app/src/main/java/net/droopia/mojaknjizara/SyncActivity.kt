@@ -70,6 +70,9 @@ class SyncActivity : AppCompatActivity() {
             }
         })
 
+        progressBar!!.max = unsyncedBooksList.size
+
+        txtView!!.text = 0.toString() + "/" + progressBar!!.max
 
         // handling click on button
         btn.setOnClickListener {
@@ -139,21 +142,42 @@ class SyncActivity : AppCompatActivity() {
                     "api_token", urlDev)?.toUri() ?: urlDev
                 ).toString()
 
-        val picasoBitmap = Picasso.get().load(current.cover).get()
-        val fileObject = bitmapToFile(picasoBitmap, "temp_file.jpg")!!
 
         val client = OkHttpClient()
 
-        val JSONObjectString_2 = "{\"title\": \"${current.title}\", \"shortDescription\": \"${current.author}\", \"body\": \"${current.isbn13}\"}"
-        val MEDIA_TYPE_JPG = "image/jpeg".toMediaType()
-        val fileUri = Uri.parse(current.cover)
-        val fileName = fileUri.lastPathSegment
+        val JSONObjectString_2 =
+            "{\"title\": \"${current.title}\", \"shortDescription\": \"${current.author}\", \"body\": \"${current.isbn13}\"}"
 
-        val requestBody = MultipartBody.Builder()
+
+//        var requestBody : <MultipartBody>
+
+        var requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("metadata", JSONObjectString_2)
-            .addFormDataPart("file", fileName, fileObject.asRequestBody(MEDIA_TYPE_JPG))
             .build()
+
+        if (current.cover?.isNotEmpty() == true) {
+            val picasoBitmap = Picasso.get().load(current.cover).get()
+
+            val fileObject = bitmapToFile(picasoBitmap, "temp_file.jpg")!!
+
+            val MEDIA_TYPE_JPG = "image/jpeg".toMediaType()
+            val fileUri = Uri.parse(current.cover)
+            val fileName = fileUri.lastPathSegment
+
+            requestBody = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("metadata", JSONObjectString_2)
+                .addFormDataPart("file", fileName, fileObject.asRequestBody(MEDIA_TYPE_JPG))
+                .build()
+        } else {
+            requestBody = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("metadata", JSONObjectString_2)
+                .build()
+        }
+
+
 
         val request = Request.Builder()
             .header("X-AUTH-TOKEN", apiToken)
@@ -181,7 +205,7 @@ class SyncActivity : AppCompatActivity() {
         //create a file to write bitmap data
         var file: File? = null
         return try {
-            file = File(Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave)
+            file = File(getFilesDir().getAbsolutePath() + File.separator + fileNameToSave)
             file.createNewFile()
 
             //Convert bitmap to byte array

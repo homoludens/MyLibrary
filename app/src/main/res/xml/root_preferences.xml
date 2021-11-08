@@ -7,7 +7,7 @@
             app:title="Remote URL"
             app:summary="Remote Site API URL"
             android:inputType="textUri"
-            app:defaultValue="http://10.0.2.2:8000/api/blogpost"
+            app:defaultValue="http://biblioteka.kuda.org/api/blogpost"
             app:dialogTitle="Set Remote Site"
             app:key="remote_url"
             />
