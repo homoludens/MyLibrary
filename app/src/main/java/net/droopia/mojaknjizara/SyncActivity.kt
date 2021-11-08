@@ -18,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.squareup.picasso.Picasso
 import net.droopia.mojaknjizara.database.Book
@@ -42,13 +43,11 @@ class SyncActivity : AppCompatActivity() {
     private var txtView: TextView? = null
     private val handler = Handler()
 
-
+    private var unsyncedBooksList : MutableList<Book> = mutableListOf()
 
     private val bookViewModel: BookViewModel by viewModels {
         BookViewModelFactory((application as BooksApplication).repository)
     }
-
-//    val unsyncedBook: LiveData<List<Book>>? = bookViewModel.toReadShelf
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,15 +63,13 @@ class SyncActivity : AppCompatActivity() {
         val btn = findViewById<Button>(R.id.show_button)
 
 
+        // get all unsynced books (currently on to-read shelf
         bookViewModel.toReadShelf?.observe(this, { observable ->
             if (observable != null) {
                 for (book: Book in observable) {
-                    println(book)
-                }
-            }
+                    unsyncedBooksList.add(book)
 
-            observable?.let { details ->
-                println(details)
+                }
             }
         })
 
@@ -84,31 +81,37 @@ class SyncActivity : AppCompatActivity() {
             // setting the progressbar visibility to visible
             progressBar!!.visibility = View.VISIBLE
 
+//            progressBar!!.max = numberOfUnsyncedBooks
             i = progressBar!!.progress
 
             Thread(Runnable {
 
+                println("unsyncedBooksList.size: ")
+                println(unsyncedBooksList.size)
 
-                // this loop will run until the value of i becomes 99
-                while (i < 100) {
+                progressBar!!.max = unsyncedBooksList.size
+
+                val iterate = unsyncedBooksList.listIterator()
+
+                while (iterate.hasNext()) {
+
+                    val book = iterate.next()
+                    println(book)
+//                    postBook(book)
+
                     i += 1
-                    // Update the progress bar and display the current value
                     handler.post(Runnable {
                         progressBar!!.progress = i
                         // setting current progress to the textview
                         txtView!!.text = i.toString() + "/" + progressBar!!.max
                     })
+
                     try {
-                        Thread.sleep(100)
+                        Thread.sleep(300)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
                 }
-
-                // setting the visibility of the progressbar to invisible
-                // or you can use View.GONE instead of invisible
-                // View.GONE will remove the progressbar
-
 
             }).start()
 

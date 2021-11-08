@@ -88,9 +88,7 @@ class BookViewModel(private val repository: BookRepository) : ViewModel() {
     fun booksReadAllYear(): LiveData<Int> {
         return repository.booksReadSince(LocalDate.ofYearDay(LocalDate.now().year, 1).toEpochDay())
     }
-    fun booksReadAllTime(): LiveData<Int> {
-        return repository.booksReadSince(0.toLong())
-    }
+
     fun averagePageNumbersReadAllYear():LiveData<Int> {
         return repository.averagePageNumbersReadSince(LocalDate.ofYearDay(LocalDate.now().year, 1).toEpochDay())
     }
