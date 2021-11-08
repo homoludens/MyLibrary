@@ -57,7 +57,7 @@
             android:layout_below="@+id/text_view"
             android:layout_marginLeft="70dp"
             android:layout_marginTop="20dp"
-            android:text="Progress Bar"
+            android:text="Sync Books"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="70dp" />
 
