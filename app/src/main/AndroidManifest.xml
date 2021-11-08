@@ -18,7 +18,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_book_logo_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MojaKnjizara">
+        android:theme="@style/Theme.MojaKnjizara"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />

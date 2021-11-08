@@ -12,6 +12,15 @@
             app:key="remote_url"
             />
 
+        <EditTextPreference
+            app:title="Auth Token"
+            app:summary="Remote Site API Token"
+            android:inputType="textUri"
+            app:defaultValue="marko1112@droopia.net"
+            app:dialogTitle="Set API Token"
+            app:key="api_token"
+            />
+
         <ListPreference
             app:defaultValue="reply"
             app:entries="@array/reply_entries"

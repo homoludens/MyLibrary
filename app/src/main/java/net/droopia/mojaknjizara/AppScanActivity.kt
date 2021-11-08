@@ -113,7 +113,7 @@ class AppScanActivity : ScanActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val resolver: ContentResolver = contentResolver
             val contentValues = ContentValues()
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "zynkphoto${dateFormatted}.jpg")
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "BookCoverPhoto-$timeStamp.jpg")
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/*")
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM")
             val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
