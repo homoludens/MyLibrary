@@ -62,8 +62,12 @@ class NewBookActivity : AppCompatActivity() {
         newBook?.let {
 
             it.selfLink?.let {
-                openLibraryViewModel.getCobissBookDetails(it)
-//                openLibraryViewModel.getGoogleBookDetails(it)
+                val is_googlebooks : Boolean = "googleapis" in it
+                if (is_googlebooks == true) {
+                    openLibraryViewModel.getGoogleBookDetails(it)
+                } else {
+                    openLibraryViewModel.getCobissBookDetails(it)
+                }
             }
 
 //            it.isbn13?.let {

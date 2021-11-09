@@ -277,7 +277,7 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
      * @param query search terms
      * @param is_barcode if search should be just by ISBN
      */
-    fun searchOpenLibrary(query: String, is_barcode: Boolean = false) = viewModelScope.launch {
+    fun searchGoogleBooks(query: String, is_barcode: Boolean = false) = viewModelScope.launch {
 
         val url = "https://$base/books/v1/volumes"
         val barcode_code = if (is_barcode) "isbn:" else ""
@@ -392,6 +392,8 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
                     numResults.value = 0
                     searches.setValue(emptyList<Book>())
                     Log.e("BK", "No results :(")
+
+                    searchGoogleBooks(query, is_barcode)
                 }
             },
             {
@@ -553,9 +555,9 @@ internal class CobissModel(application: Application) : AndroidViewModel(applicat
             author = author,
             authorExtras = null,
             publisher = publisher,
-            year = publishYear.toInt(),
+            year = publishYear?.toInt(),
             originalYear = null,
-            numberPages = numberPages.toInt(),
+            numberPages = numberPages?.toInt(),
             progress = null,
             series = null,
             language = null,
