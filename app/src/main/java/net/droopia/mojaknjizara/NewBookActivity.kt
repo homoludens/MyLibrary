@@ -96,7 +96,7 @@ class NewBookActivity : AppCompatActivity() {
 
                 newBook?.let{
                     displayNewBook(it)
-                    Log.e(TAG_NEW, "openLibraryViewModel.bookDetails.observe: $it")
+                    Log.i(TAG_NEW, "openLibraryViewModel.bookDetails.observe: $it")
                 }
             }
         })

@@ -32,11 +32,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 //https://www.geeksforgeeks.org/progressbar-in-kotlin/
+const val TAG_SYNC = "BookSync"
 
 class SyncActivity : AppCompatActivity() {
 
     private var progressBar: ProgressBar? = null
     private var i = 0
+    private var j = 0
     private var txtView: TextView? = null
     private val handler = Handler()
 
@@ -65,39 +67,28 @@ class SyncActivity : AppCompatActivity() {
         bookViewModel.toReadShelf?.observe(this, { observable ->
             if (observable != null) {
                 for (book: Book in observable) {
+                    j += 1
                     unsyncedBooksList += book
 //                    unsyncedBooksList.add(book)
+                    progressBar!!.max = j
+                    txtView!!.text = 0.toString() + "/" + progressBar!!.max
                 }
             }
         })
 
-        progressBar!!.max = unsyncedBooksList.size
-
-        txtView!!.text = 0.toString() + "/" + progressBar!!.max
-
         // handling click on button
         btn.setOnClickListener {
-            // Before clicking the button the progress bar will invisible
-            // so we have to change the visibility of the progress bar to visible
-            // setting the progressbar visibility to visible
-//            progressBar!!.visibility = View.VISIBLE
 
-//            progressBar!!.max = numberOfUnsyncedBooks
             i = progressBar!!.progress
 
             Thread(Runnable {
-
-                println("unsyncedBooksList.size: ")
-                println(unsyncedBooksList.size)
-
-                progressBar!!.max = unsyncedBooksList.size
 
                 val iterate = unsyncedBooksList.listIterator()
 
                 while (iterate.hasNext()) {
 
                     val book = iterate.next()
-                    println(book)
+                    Log.i(TAG_SYNC, "postBook thread: $book")
                     postBook(book)
 
                     i += 1
@@ -113,13 +104,8 @@ class SyncActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                 }
-
             }).start()
-
-//            progressBar!!.visibility = View.INVISIBLE
         }
-
-
     }
 
     /**
