@@ -40,7 +40,8 @@
             android:label="@string/title_search_book_activity" />
         <activity
             android:name=".SyncActivity"
-            android:label="Sync Books to web" />
+            android:label="Sync Books to web"
+            android:parentActivityName=".MainActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

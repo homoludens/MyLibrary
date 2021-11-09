@@ -49,6 +49,7 @@ class SyncActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sync)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // finding progressbar by its id
         progressBar = findViewById<ProgressBar>(R.id.progress_Bar) as ProgressBar
@@ -79,7 +80,7 @@ class SyncActivity : AppCompatActivity() {
             // Before clicking the button the progress bar will invisible
             // so we have to change the visibility of the progress bar to visible
             // setting the progressbar visibility to visible
-            progressBar!!.visibility = View.VISIBLE
+//            progressBar!!.visibility = View.VISIBLE
 
 //            progressBar!!.max = numberOfUnsyncedBooks
             i = progressBar!!.progress
@@ -115,8 +116,10 @@ class SyncActivity : AppCompatActivity() {
 
             }).start()
 
-            progressBar!!.visibility = View.INVISIBLE
+//            progressBar!!.visibility = View.INVISIBLE
         }
+
+
     }
 
     /**
