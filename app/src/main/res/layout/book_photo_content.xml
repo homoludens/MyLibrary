@@ -35,6 +35,7 @@
                 android:background="#ff0000"
                 android:text="@string/capture"
                 android:textColor="@android:color/black"
+                android:visibility="gone"
                 />
 
             <Button
@@ -44,7 +45,8 @@
                 android:layout_weight="0.5"
                 android:background="#ff0000"
                 android:text="@string/choose"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/book_btn_crop"
