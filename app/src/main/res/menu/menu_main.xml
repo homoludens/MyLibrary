@@ -8,6 +8,12 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/menu_manual_add"
+        android:orderInCategory="99"
+        android:title="Add book"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_edit_text"
         android:orderInCategory="99"
         android:title="@string/book_edit"

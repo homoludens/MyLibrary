@@ -27,6 +27,7 @@ import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONObject
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -136,6 +137,15 @@ class SyncActivity : AppCompatActivity() {
 
         val JSONObjectString_2 =
             "{\"title\": \"${current.title}\", \"shortDescription\": \"${current.author}\", \"body\": \"${current.isbn13}\"}"
+
+        val rootObject= JSONObject()
+        rootObject.put("title",current.title)
+        rootObject.put("author",current.author)
+        rootObject.put("body",current.description)
+        rootObject.put("shortDescription",current.description)
+        rootObject.put("isbn13",current.isbn13)
+        rootObject.put("published_year",current.year)
+
 
 
 //        var requestBody : <MultipartBody>

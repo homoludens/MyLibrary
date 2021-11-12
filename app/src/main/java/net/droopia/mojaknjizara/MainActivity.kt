@@ -13,7 +13,11 @@ import android.view.MenuItem
 import net.droopia.mojaknjizara.databinding.ActivityMainBinding
 import com.zynksoftware.documentscanner.ui.DocumentScanner
 import android.graphics.Bitmap
+import android.text.InputType
+import android.util.Log
+import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import net.droopia.mojaknjizara.database.BookViewModel
 import net.droopia.mojaknjizara.api.Exporter
 import net.droopia.mojaknjizara.api.Import
@@ -99,6 +103,28 @@ class MainActivity : AppCompatActivity() {
             R.id.action_sync ->  {
                 val intent = Intent(applicationContext, SyncActivity::class.java)
                 startActivity(intent)
+                return true
+            }
+
+            R.id.menu_manual_add ->  {
+
+                Log.e(TAG_NEW, "Manual Book menu_manual_add")
+                val newBook = emptyBook(fullTitle = "change title", author = null, isbn13 = null, isbn10 = null)
+                bookViewModel.insertSync(newBook).observe(this, { observed ->
+                    if (observed > 0) {
+                        val intent = Intent(applicationContext, BookEditActivity::class.java).apply {
+                            putExtra(EXTRA_ID, observed)
+                        }
+                        startActivity(intent)
+                    } else {
+                        Log.e(TAG_NEW, "Manual Book could not be added: $observed")
+                    }
+
+                })
+
+
+//                val intent = Intent(applicationContext, SyncActivity::class.java)
+//                startActivity(intent)
                 return true
             }
 
