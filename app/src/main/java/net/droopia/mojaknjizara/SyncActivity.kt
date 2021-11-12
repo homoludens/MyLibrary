@@ -181,7 +181,6 @@ class SyncActivity : AppCompatActivity() {
         }
 
 
-
         val request = Request.Builder()
             .header("X-AUTH-TOKEN", apiToken)
             .url(url)
@@ -190,8 +189,7 @@ class SyncActivity : AppCompatActivity() {
 
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-            println(response)
+            Log.e(TAG_SYNC, "Unexpected code: $response")
         }
     }
 
