@@ -71,8 +71,8 @@ class SyncActivity : AppCompatActivity() {
                     j += 1
                     unsyncedBooksList += book
 //                    unsyncedBooksList.add(book)
-                    progressBar!!.max = j
-                    txtView!!.text = 0.toString() + "/" + progressBar!!.max
+//                    progressBar!!.max = j
+//                    txtView!!.text = 0.toString() + "/" + j
                 }
             }
         })
@@ -80,8 +80,9 @@ class SyncActivity : AppCompatActivity() {
         // handling click on button
         btn.setOnClickListener {
 
-            i = progressBar!!.progress
+//            i = progressBar!!.progress
 
+            progressBar!!.max = j
             Thread(Runnable {
 
                 val iterate = unsyncedBooksList.listIterator()
@@ -117,7 +118,7 @@ class SyncActivity : AppCompatActivity() {
     fun postBook(current: Book) {
 
 
-        current?.let { it.shelveSync(ShelfType.ReadShelf, bookViewModel) }
+        current?.let { it.shelveSync(ShelfType.ToReadShelf, bookViewModel) }
 
         val urlDev = "http://10.0.2.2:8000/api/blogpost"
 
@@ -135,18 +136,21 @@ class SyncActivity : AppCompatActivity() {
 
         val client = OkHttpClient()
 
-        val JSONObjectString_2 =
-            "{\"title\": \"${current.title}\", \"shortDescription\": \"${current.author}\", \"body\": \"${current.isbn13}\"}"
+//        val JSONObjectString_2 =
+//            "{\"title\": \"${current.title}\", \"shortDescription\": \"${current.author}\", \"body\": \"${current.isbn13}\"}"
 
+        val isbn = if (current.isbn10.isNullOrEmpty()) current.isbn13  else current.isbn10
         val rootObject= JSONObject()
         rootObject.put("title",current.title)
         rootObject.put("author",current.author)
-        rootObject.put("body",current.description)
+        rootObject.put("body", current.description)
         rootObject.put("shortDescription",current.description)
-        rootObject.put("isbn13",current.isbn13)
+        rootObject.put("isbn", isbn)
         rootObject.put("published_year",current.year)
 
+        val JSONObjectString_2 = rootObject.toString()
 
+        Log.i(TAG_SYNC, "Syncing book: $JSONObjectString_2")
 
 //        var requestBody : <MultipartBody>
 
